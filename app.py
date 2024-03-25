@@ -142,7 +142,7 @@ def create_app(db_URI="",test_config=None):
     try:
       movie = Movie.query.get(movie_id)
       if movie == None:
-        abort(500)
+        abort(404)
       db.session.delete(movie)
       db.session.commit()
       return jsonify({
@@ -265,7 +265,7 @@ def create_app(db_URI="",test_config=None):
     try:
       actor = Actor.query.get(actor_id)
       if actor == None:
-        abort(500)
+        abort(404)
       db.session.delete(actor)
       db.session.commit()
       return jsonify({'success': True, 'deleted': actor_id})

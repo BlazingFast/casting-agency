@@ -136,12 +136,12 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_delete_movies_error(self):
         id = -22
         res = self.client().delete('/movies/{}'.format(id), headers=self.requestHeadersProducer())
-        self.assertEqual(res.status_code, 500)
+        self.assertEqual(res.status_code, 404)
 
     def test_delete_actors_error(self):
         id = -34
         res = self.client().delete('/actors/{}'.format(id), headers=self.requestHeadersDirector())
-        self.assertEqual(res.status_code, 500)
+        self.assertEqual(res.status_code, 404)
 
     def test_delete_movies_error_RBAC(self):
         info = {"name": "New Movie", "release_date": "2024-03-24 21:37:56"}

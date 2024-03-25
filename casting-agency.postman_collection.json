@@ -1,0 +1,488 @@
+{
+	"info": {
+		"_postman_id": "75c8e8cf-9abc-4046-9846-914027327ffe",
+		"name": "casting-agency",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32935416"
+	},
+	"item": [
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains drinks array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.drinks).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}",
+							"host": [
+								"{{host}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "casting-assistant",
+			"item": [
+				{
+					"name": "/movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/search",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "search_term",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/movies/search",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/search",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "search_term",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/actors/search",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImpWVUJSN3hHeUJaSzNpemhZaC14aiJ9.eyJpc3MiOiJodHRwczovL2Rldi1oNGh2bWprN2hua2VzemNiLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjAxNmM3MTE1NGMyZmY1OWQ4MWQ5MzUiLCJhdWQiOiJkZXYiLCJpYXQiOjE3MTEzNzE2MjEsImV4cCI6MTcxMTQ1ODAyMSwic2NvcGUiOiIiLCJhenAiOiJQSmk1Nkg5VmJGQTY3d3Y5VXRFeHhFOUd3Z293N0luYyIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.JPtxcVFHkbM8Fcw4iIECx6pFZjzugzFpevzCkB0tjQNyfgtH5ACMLEuha0OOLTQ4N5o-cUIk6oKpZv1blGssMmDgKjYpUDKzHThJPUyowIPoVo_FRgxaTxbktEE03G9jH8JyF3AGurFY7DvM55z9scyqo8PmFhHTu_oD5uPzrYMZ5SmYA7BnLlPL6Iu1QAmCW9inCiELdtKPRx47YHgyUGrpkG_Cj6L12t-swMHa3ntTM6QeEgZpsKdq3lROZxy6GiVs2gnym8zAv7IHjkaofKzjkyIdMFxgg4_FoyVSO0XnjssZKV7xpY-HeCBUzJkEqpX-_9Ecbzw7qmpSkDz5ig",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "casting-director",
+			"item": [
+				{
+					"name": "/actors/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New Actor",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "MALE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/actors/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/id/edit",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New Actor modified",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "MALE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/actors/1/edit",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"1",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/id/edit",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New Movie modified",
+									"type": "text"
+								},
+								{
+									"key": "release_date",
+									"value": "2024-06-30 21:37:56",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/movies/1/edit",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"1",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/actors/id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actors/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImpWVUJSN3hHeUJaSzNpemhZaC14aiJ9.eyJpc3MiOiJodHRwczovL2Rldi1oNGh2bWprN2hua2VzemNiLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjAxNmM4ZmYyZTg2Njg0MTg4MTMzMTAiLCJhdWQiOiJkZXYiLCJpYXQiOjE3MTEzNzE2NzIsImV4cCI6MTcxMTQ1ODA3Miwic2NvcGUiOiIiLCJhenAiOiJQSmk1Nkg5VmJGQTY3d3Y5VXRFeHhFOUd3Z293N0luYyIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyIsInBvc3Q6YWN0b3JzIl19.FipRZHYLXYu9_gKX_-3EPPNAgh21jqM685j4rqSIzMIL__ns68z72_tb1mhx7VfrHIJW7SdzLvn1O-K2yeVss0bUNqeCwwOk1BQSLXq5GzqUhEbRhdfWsfmpMD4-8tLm-Iie2iKwJYuwIBJZLeh0QhlhgJDNFSm3btSUZtllfozvBGZbW9py5dqF0UtxEiQalhM8yg3G-fgrwwQafPZb6Jx18dRAxk9Kl7p-oGOtI8jZKHm3dJ_pqmuFKWEW0rX0-7C7j6FEIn2PWmJms06504NzxBSf5kKbSCveqpkAqitzk-aej3Y1JTCxnjHHpFTxWCrjhIIZv36I-Owk0fCu8g",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "executive-producer",
+			"item": [
+				{
+					"name": "/movies/id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movies/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movies/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New Movie",
+									"type": "text"
+								},
+								{
+									"key": "release_date",
+									"value": "2024-03-24 21:37:56",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/movies/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movies",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImpWVUJSN3hHeUJaSzNpemhZaC14aiJ9.eyJpc3MiOiJodHRwczovL2Rldi1oNGh2bWprN2hua2VzemNiLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjAxNmNjYjdlODdmN2E4YzBhODU0MTgiLCJhdWQiOiJkZXYiLCJpYXQiOjE3MTEzNzE3MjUsImV4cCI6MTcxMTQ1ODEyNSwic2NvcGUiOiIiLCJhenAiOiJQSmk1Nkg5VmJGQTY3d3Y5VXRFeHhFOUd3Z293N0luYyIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJwb3N0OmFjdG9ycyIsInBvc3Q6bW92aWVzIl19.K9DVWajPnEfIKv1jrBVzQT5Q8k66fPXmg1YzRBANKrUx_dScVICUaCQBG_dpLGHcSFxQn7eTlmnueToiTvZBYkucKDzWmSJAsONF3V2qOhNQ7qQeznYH_Ibv3ZF1ITu55quxPLnUzQN1tKDWW-Bt5x9LfYO3tAOV9gp3vIws73oxoXjQPZFGt79WUbl4FrSUNHAfXmQWY_8RuXldBidDKYpEnI0ck9b-YGQa3tw2p_ipg0I_CDWNV3zHg417VIvcm8TKatrSwvgWIu3TxE9ZSciMQY5Wj7PDo3Sud7dLdvuPc2FAaKBRMLVWh5TBE4VRk5X8tsQtsD-vp7sfD5GIwQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://casting-agency-nlmg.onrender.com",
+			"type": "string"
+		}
+	]
+}
