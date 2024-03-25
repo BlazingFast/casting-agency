@@ -102,7 +102,10 @@ def create_app(db_URI="",test_config=None):
     try:
       movie = Movie.query.get(movie_id)
       if not movie:
-        abort(404)
+        return jsonify({
+          'success': False,
+          'message': 'Not Found'
+          })
       data = {
               'id': movie.id,
               'name': movie.name,
@@ -144,7 +147,10 @@ def create_app(db_URI="",test_config=None):
     try:
       movie = Movie.query.get(movie_id)
       if not movie:
-        abort(404)
+        return jsonify({
+              'success': False,
+              'message': 'Not Found'
+              })
       db.session.delete(movie)
       db.session.commit()
       return jsonify({
@@ -204,7 +210,10 @@ def create_app(db_URI="",test_config=None):
     try:
       actor = Actor.query.get(actor_id)
       if not actor:
-        abort(404)
+        return jsonify({
+          'success': False,
+          'message': 'Not Found'
+          })
       data = {
             'id': actor.id,
             'name': actor.name,
@@ -226,7 +235,10 @@ def create_app(db_URI="",test_config=None):
       try:
         actor = Actor.query.get(actor_id)
         if not actor:
-          abort(404)
+          return jsonify({
+            'success': False,
+            'message': 'Not Found'
+            })
         form.populate_obj(actor)
         db.session.commit()
         data = {
@@ -251,7 +263,10 @@ def create_app(db_URI="",test_config=None):
       try:
         movie = Movie.query.get(movie_id)
         if not movie:
-          abort(404)
+          return jsonify({
+            'success': False,
+            'message': 'Not Found'
+            })
         form.populate_obj(movie)
         db.session.commit()
         data = {
@@ -273,7 +288,10 @@ def create_app(db_URI="",test_config=None):
     try:
       actor = Actor.query.get(actor_id)
       if not actor:
-        abort(404)
+        return jsonify({
+          'success': False,
+          'message': 'Not Found'
+        })
       db.session.delete(actor)
       db.session.commit()
       return jsonify({'success': True, 'deleted': actor_id})
