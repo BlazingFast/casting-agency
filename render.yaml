@@ -1,0 +1,21 @@
+# Exported from Render on 2024-03-25T14:20:08Z
+services:
+- type: web
+  name: casting-agency
+  runtime: python
+  repo: https://github.com/BlazingFast/casting-agency
+  branch: main
+  plan: free
+  envVars:
+  - key: EXECUTIVE_PRODUCER
+    sync: false
+  - key: CASTING_DIRECTOR
+    sync: false
+  - key: CASTING_ASSISTANT
+    sync: false
+  - key: DATABASE_URI
+    sync: false
+  region: oregon
+  buildCommand: pip install -r requirements.txt
+  startCommand: gunicorn app:app
+version: "1"
