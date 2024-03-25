@@ -101,7 +101,7 @@ def create_app(db_URI="",test_config=None):
   def show_movie(payload, movie_id):
     try:
       movie = Movie.query.get(movie_id)
-      if movie == None:
+      if not movie:
         abort(404)
       data = {
               'id': movie.id,
@@ -143,7 +143,7 @@ def create_app(db_URI="",test_config=None):
   def delete_movie(payload, movie_id):
     try:
       movie = Movie.query.get(movie_id)
-      if movie == None:
+      if not movie:
         abort(404)
       db.session.delete(movie)
       db.session.commit()
@@ -203,7 +203,7 @@ def create_app(db_URI="",test_config=None):
   def show_actor(payload, actor_id):
     try:
       actor = Actor.query.get(actor_id)
-      if actor == None:
+      if not actor:
         abort(404)
       data = {
             'id': actor.id,
@@ -225,6 +225,8 @@ def create_app(db_URI="",test_config=None):
     if form.validate():
       try:
         actor = Actor.query.get(actor_id)
+        if not actor:
+          abort(404)
         form.populate_obj(actor)
         db.session.commit()
         data = {
@@ -248,6 +250,8 @@ def create_app(db_URI="",test_config=None):
     if form.validate():
       try:
         movie = Movie.query.get(movie_id)
+        if not movie:
+          abort(404)
         form.populate_obj(movie)
         db.session.commit()
         data = {
@@ -268,7 +272,7 @@ def create_app(db_URI="",test_config=None):
   def delete_actor(payload, actor_id):
     try:
       actor = Actor.query.get(actor_id)
-      if actor == None:
+      if not actor:
         abort(404)
       db.session.delete(actor)
       db.session.commit()
