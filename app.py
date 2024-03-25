@@ -101,6 +101,8 @@ def create_app(db_URI="",test_config=None):
   def show_movie(payload, movie_id):
     try:
       movie = Movie.query.get(movie_id)
+      if movie == None:
+        abort(404)
       data = {
               'id': movie.id,
               'name': movie.name,
@@ -201,6 +203,8 @@ def create_app(db_URI="",test_config=None):
   def show_actor(payload, actor_id):
     try:
       actor = Actor.query.get(actor_id)
+      if actor == None:
+        abort(404)
       data = {
             'id': actor.id,
             'name': actor.name,
