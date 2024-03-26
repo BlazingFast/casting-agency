@@ -1,6 +1,11 @@
 The Casting Agency
 -----
 
+## Motivation
+The motivation behind the Capstone project was the urge to apply all the skills I learnt, all of it in a single project.
+It was a great learning journey from learning databases, backend APIs, IAM and cherry on the top of the cake - deployments to the cloud!
+Thanks to the whole Udacity team for the nice content and awesome support!
+
 ## Introduction
 
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
