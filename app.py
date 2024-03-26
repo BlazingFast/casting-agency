@@ -33,10 +33,6 @@ def create_app(db_URI="",test_config=None):
       response.headers.add('Access-Control-Allow-Headers', 'GET, POST, PATCH, DELETE, OPTIONS')
       return response
 
-  #----------------------------------------------------------------------------#
-  # Models.
-  #----------------------------------------------------------------------------#
-
   def format_datetime(value, format='medium'):
     date = dateutil.parser.parse(value)
     if format == 'full':
@@ -56,7 +52,7 @@ def create_app(db_URI="",test_config=None):
     return 'The Casting Agency is up and running!!'
 
 
-  #  Movies
+  #  GET
   #  ----------------------------------------------------------------
 
   @app.route('/movies')
@@ -77,25 +73,6 @@ def create_app(db_URI="",test_config=None):
       abort(500)
 
 
-  @app.route('/movies/search', methods=['POST'])
-  @requires_auth('get:movies')
-  def search_movies(payload):
-    try:
-      query_string = request.form.get('search_term')
-      movies = Movie.query.filter(Movie.name.ilike('%'+query_string+'%'))
-      data = [
-          {
-              'id': movie.id,
-              'name': movie.name,
-              'release_date': movie.release_date,
-          }
-          for movie in movies]
-      response = {'count': len(Movie.query.all()), 'data': data}
-      return jsonify(response)
-    except:
-      abort(500)
-      
-
   @app.route('/movies/<int:movie_id>')
   @requires_auth('get:movies')
   def show_movie(payload, movie_id):
@@ -115,56 +92,6 @@ def create_app(db_URI="",test_config=None):
     except:
       abort(500)
 
-  #  Create Movie
-  #  ----------------------------------------------------------------
-
-  @app.route('/movies/create', methods=['POST'])
-  @requires_auth('post:movies')
-  def create_movie_submission(payload):
-    form = MovieForm(request.form, meta={'csrf': False})
-    if form.validate():
-      try:
-        movie = Movie()
-        form.populate_obj(movie)
-        db.session.add(movie)
-        db.session.commit()
-        return jsonify({
-              'success': True,
-              'created': movie.id
-              })
-      except:
-        db.session.rollback()
-        abort(500)
-      finally:
-        db.session.close()
-    else:
-      abort(500)
-      
-
-  @app.route('/movies/<movie_id>', methods=['DELETE'])
-  @requires_auth('delete:movies')
-  def delete_movie(payload, movie_id):
-    try:
-      movie = Movie.query.get(movie_id)
-      if not movie:
-        return jsonify({
-              'success': False,
-              'message': 'Not Found'
-              })
-      db.session.delete(movie)
-      db.session.commit()
-      return jsonify({
-              'success': True,
-              'deleted': movie.id
-              })
-    except:
-      db.session.rollback()
-      abort(500)
-    finally:
-      db.session.close()
-
-  #  Actors
-  #  ----------------------------------------------------------------
 
   @app.route('/actors')
   @requires_auth('get:actors')
@@ -180,26 +107,6 @@ def create_app(db_URI="",test_config=None):
           }
           for actor in actors]
       return jsonify({'success': True, 'actors':data, 'actors_count': len(data)})
-    except:
-      abort(500)
-
-
-  @app.route('/actors/search', methods=['POST'])
-  @requires_auth('get:actors')
-  def search_actors(payload):
-    try:
-      query_string = request.form.get('search_term')
-      actors = Actor.query.filter(Actor.name.ilike('%'+query_string+'%'))
-      data = [
-        {
-            'id': actor.id,
-            'name': actor.name,
-            'gender': actor.gender,
-            'age': actor.age
-        }
-        for actor in actors]
-      response = {'count': len(data), 'data': data}
-      return jsonify(response)
     except:
       abort(500)
 
@@ -224,12 +131,126 @@ def create_app(db_URI="",test_config=None):
     except:
       abort(500)
 
-  #  Update
+  #  POST
   #  ----------------------------------------------------------------
+
+  @app.route('/movies/create', methods=['POST'])
+  @requires_auth('post:movies')
+  def create_movie_submission(payload):
+    form = MovieForm(request.form, meta={'csrf': False})
+    if form.validate():
+      try:
+        movie = Movie()
+        form.populate_obj(movie)
+        db.session.add(movie)
+        db.session.commit()
+        return jsonify({
+              'success': True,
+              'created': movie.id
+              })
+      except:
+        db.session.rollback()
+        abort(500)
+      finally:
+        db.session.close()
+    else:
+      abort(500)
+      
+  @app.route('/movies/search', methods=['POST'])
+  @requires_auth('get:movies')
+  def search_movies(payload):
+    try:
+      query_string = request.form.get('search_term')
+      movies = Movie.query.filter(Movie.name.ilike('%'+query_string+'%'))
+      data = [
+          {
+              'id': movie.id,
+              'name': movie.name,
+              'release_date': movie.release_date,
+          }
+          for movie in movies]
+      response = {'count': len(Movie.query.all()), 'data': data}
+      return jsonify(response)
+    except:
+      abort(500)
+
+
+  @app.route('/actors/create', methods=['POST'])
+  @requires_auth('post:actors')
+  def create_actor_submission(payload):
+    form = ActorForm(request.form, meta={'csrf': False})
+    if form.validate():
+      try:
+        actor = Actor()
+        form.populate_obj(actor)
+        db.session.add(actor)
+        db.session.commit()
+        return jsonify({
+              'success': True,
+              'created': actor.id
+              })
+      except:
+        db.session.rollback()
+        abort(500)
+      finally:
+        db.session.close()
+
+    else:
+      abort(500)
+
+
+  @app.route('/actors/search', methods=['POST'])
+  @requires_auth('get:actors')
+  def search_actors(payload):
+    try:
+      query_string = request.form.get('search_term')
+      actors = Actor.query.filter(Actor.name.ilike('%'+query_string+'%'))
+      data = [
+        {
+            'id': actor.id,
+            'name': actor.name,
+            'gender': actor.gender,
+            'age': actor.age
+        }
+        for actor in actors]
+      response = {'count': len(data), 'data': data}
+      return jsonify(response)
+    except:
+      abort(500)
+
+  #  PATCH
+  #  ----------------------------------------------------------------
+
+  @app.route('/movies/<int:movie_id>/edit', methods=['PATCH'])
+  @requires_auth('patch:movies')
+  def edit_movie(payload, movie_id):
+    form = MovieForm(request.form, meta={'csrf': False})
+    if form.validate():
+      try:
+        movie = Movie.query.get(movie_id)
+        if not movie:
+          return jsonify({
+            'success': False,
+            'message': 'Not Found'
+            })
+        form.populate_obj(movie)
+        db.session.commit()
+        data = {
+              'id': movie.id,
+              'name': movie.name,
+              'release_date': movie.release_date,
+          }
+        return jsonify({'success': True, 'movie': data})
+      except:
+        db.session.rollback()
+        abort(500)
+    else:
+      abort(500)
+
 
   @app.route('/actors/<int:actor_id>/edit', methods=['PATCH'])
   @requires_auth('patch:actors')
-  def edit_actor_submission(payload, actor_id):
+  def edit_actor(payload, actor_id):
     form = ActorForm(request.form, meta={'csrf': False})
     if form.validate():
       try:
@@ -254,33 +275,31 @@ def create_app(db_URI="",test_config=None):
     else:
       abort(500)
 
-
-  @app.route('/movies/<int:movie_id>/edit', methods=['PATCH'])
-  @requires_auth('patch:movies')
-  def edit_movie_submission(payload, movie_id):
-    form = MovieForm(request.form, meta={'csrf': False})
-    if form.validate():
-      try:
-        movie = Movie.query.get(movie_id)
-        if not movie:
-          return jsonify({
-            'success': False,
-            'message': 'Not Found'
-            })
-        form.populate_obj(movie)
-        db.session.commit()
-        data = {
-              'id': movie.id,
-              'name': movie.name,
-              'release_date': movie.release_date,
-          }
-        return jsonify({'success': True, 'movie': data})
-      except:
-        db.session.rollback()
-        abort(500)
-    else:
+  #  DELETE
+  #  ----------------------------------------------------------------
+      
+  @app.route('/movies/<movie_id>', methods=['DELETE'])
+  @requires_auth('delete:movies')
+  def delete_movie(payload, movie_id):
+    try:
+      movie = Movie.query.get(movie_id)
+      if not movie:
+        return jsonify({
+              'success': False,
+              'message': 'Not Found'
+              })
+      db.session.delete(movie)
+      db.session.commit()
+      return jsonify({
+              'success': True,
+              'deleted': movie.id
+              })
+    except:
+      db.session.rollback()
       abort(500)
-    
+    finally:
+      db.session.close()
+
 
   @app.route('/actors/<actor_id>', methods=['DELETE'])
   @requires_auth('delete:actors')
@@ -301,31 +320,8 @@ def create_app(db_URI="",test_config=None):
     finally:
       db.session.close()
 
-  #  Create Actor
+  #  Error Handling
   #  ----------------------------------------------------------------
-
-  @app.route('/actors/create', methods=['POST'])
-  @requires_auth('post:actors')
-  def create_actor_submission(payload):
-    form = ActorForm(request.form, meta={'csrf': False})
-    if form.validate():
-      try:
-        actor = Actor()
-        form.populate_obj(actor)
-        db.session.add(actor)
-        db.session.commit()
-        return jsonify({
-              'success': True,
-              'created': actor.id
-              })
-      except:
-        db.session.rollback()
-        abort(500)
-      finally:
-        db.session.close()
-
-    else:
-      abort(500)
 
   @app.errorhandler(422)
   def unprocessable(error):

@@ -1,3 +1,4 @@
+import dataclasses
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from config import *
@@ -13,8 +14,22 @@ def setup_db(app, database_path=SQLALCHEMY_DATABASE_URI):
     with app.app_context():
         db.create_all()
 
+class BaseModel(db.Model):
+    __abstract__ = True
 
-class Movie(db.Model):
+    def insert(self):
+       db.session.add(self)
+       db.session.commit()
+
+    def delete(self):
+       db.session.delete(self)
+       db.session.commit()
+
+    def update(self):
+       db.session.commit()
+
+@dataclasses
+class Movie(BaseModel):
     __tablename__ = 'movie'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -26,8 +41,8 @@ class Movie(db.Model):
       movies_list = Movie.query.all()
       return len(movies_list)
 
-
-class Actor(db.Model):
+@dataclasses
+class Actor(BaseModel):
     __tablename__ = 'actor'
 
     id = db.Column(db.Integer, primary_key=True)
