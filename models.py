@@ -1,4 +1,3 @@
-import dataclasses
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from config import *
@@ -28,7 +27,7 @@ class BaseModel(db.Model):
     def update(self):
        db.session.commit()
 
-@dataclasses
+
 class Movie(BaseModel):
     __tablename__ = 'movie'
 
@@ -41,7 +40,7 @@ class Movie(BaseModel):
       movies_list = Movie.query.all()
       return len(movies_list)
 
-@dataclasses
+
 class Actor(BaseModel):
     __tablename__ = 'actor'
 
